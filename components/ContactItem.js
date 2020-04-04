@@ -31,21 +31,14 @@ const ContactItem = ({contact}) => (
 const styles = StyleSheet.create({
     item: {
         padding: 10,
-        height: 60,
+        height: 70,
         flexDirection:"row",
-    },
-    iconContainer: {
-      width: 10,
-      height: 20,
-      flex:1
-    },
-    icon: {
-      width: undefined,
-      height: undefined,
-      flex: 0.5,
     },
     content:{
         flex:3,
+    },
+    text:{
+        fontSize: 20,
     }
 })
 

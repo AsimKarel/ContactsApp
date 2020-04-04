@@ -10,4 +10,15 @@ export const getContacts = (params) => {
     });
 }
 
+
+export const updateContact = (params) => {
+    return new Promise((resolve, reject) => {
+        axios.put('http://localhost:3000/update',params).then(response => {
+            resolve(response.data)
+        }).catch(error=>{
+            reject(error);
+        })
+    });
+}
+
 // export default getContacts;
