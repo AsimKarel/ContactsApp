@@ -21,7 +21,8 @@ import ContactDetails from './screens/ContactDetails';
 const App: () => React$Node = () => {
   return (
     <View style={styles.parent}>
-      <ContactDetails/>
+      {/* <ContactDetails/> */}
+      <ContactList/>
     </View>
   );
 }
