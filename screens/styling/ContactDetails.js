@@ -16,11 +16,8 @@ export default styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     actionButtons: {
-        width: 120,
-        height: 50,
-        alignSelf: 'flex-end',
-        flexDirection: 'row',
-        padding:5,
+        color:'blue', 
+        fontSize:17
     },
     deleteButton: {
         margin: 5,

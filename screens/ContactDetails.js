@@ -1,5 +1,5 @@
 import React, { Component, useState } from "react";
-import { View, Text, TouchableOpacity, Modal, SafeAreaView, Button, Alert } from "react-native";
+import { View, Text, TouchableOpacity, Modal, SafeAreaView, Alert } from "react-native";
 import EditContactsModal from './EditContactsModal'
 import { updateContact, deleteContact } from '../apis/Api'
 import styles from './styling/ContactDetails';
@@ -30,9 +30,11 @@ class ContactDetails extends React.Component {
         this.props.navigation.setOptions({
             headerRight: () => {
                 return (
-                    <View style={{ flexDirection: 'row' }}>
-                        <Button onPress={() => this.setState({ modalVisible: true })} title="Edit" />
-                        <Button onPress={() => {
+                    <View style={{ flexDirection: 'row', marginRight:20 }}>
+                        <TouchableOpacity style={{marginRight:10}} onPress={() => this.setState({ modalVisible: true })} >
+                            <Text style={styles.actionButtons}>Edit</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => {
                             Alert.alert(
                                 'Delete',
                                 'Are yoy sure you want to delete this contact?',
@@ -44,7 +46,9 @@ class ContactDetails extends React.Component {
                             )
 
                             
-                        }} title="Delete" />
+                        }} title="Delete" >
+                            <Text  style={styles.actionButtons}>Delete</Text>
+                        </TouchableOpacity>
                     </View>
                 );
             }
