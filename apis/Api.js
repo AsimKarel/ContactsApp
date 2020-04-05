@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const baseURL = 'http://localhost:3000/'
+// const baseURL = 'http://localhost:3000/'
+const baseURL = 'https://contacts-nodeapi.herokuapp.com/'
 // axios.defaults.headers.common['Token'] = 'PlivoTestAsim' 
 const config = {
     headers: { Token: 'PlivoTestAsim'},

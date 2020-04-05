@@ -10,17 +10,23 @@ class EditContactsModal extends React.Component {
     }
 
     onUpdatePress = () => {
+        if(this.state.name.trim() == ''){
+            this.setState({name_missing:true});
+            return;
+        }
+        this.setState({name_missing:false});
         this.props.onUpdatePress(this.state)
     }
 
     state = {
-        "id": 0,
-        "name": "",
-        "phone": "",
-        "email": "",
-        "country_code": "",
-        "created_on": "",
-        "updated_on": "",
+        id: 0,
+        name: '',
+        name_missing: false,
+        phone: '',
+        email: '',
+        country_code: '',
+        created_on: '',
+        updated_on: '',
     }
 
     valueChanged = (type, text) => {
@@ -52,6 +58,7 @@ class EditContactsModal extends React.Component {
                         value={this.state.name}
                         onChangeText={(text) => { this.valueChanged('name', text) }}
                     />
+                    {this.state.name_missing && <Text style={styles.errorMessage}>Please Enter Name</Text>}
                     <TextInput
                         clearButtonMode="always"
                         placeholder={'Email'}
@@ -59,6 +66,7 @@ class EditContactsModal extends React.Component {
                         value={this.state.email}
                         onChangeText={(text) => { this.valueChanged('email', text) }}
                     />
+                    {this.props.email_exists && <Text style={styles.errorMessage}>Email already exists</Text>}
                     <View style={{ flexDirection: "row" }}>
                         <TextInput
                             clearButtonMode="always"
@@ -84,6 +92,7 @@ class EditContactsModal extends React.Component {
                             }}
                         />
                     </View>
+                    {this.props.phone_exists && <Text style={styles.errorMessage}>Phone number already exists</Text>}
 
                     <TouchableOpacity style={styles.updateButton} onPress={this.onUpdatePress}>
                         <Text style={{ fontSize: 20, alignSelf: 'center', color: 'blue' }}>{this.props.title.split(' ')[0]}</Text>

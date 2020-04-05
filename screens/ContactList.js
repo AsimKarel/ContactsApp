@@ -18,6 +18,8 @@ class ContactList extends React.Component {
         sortOrder: 'ASC',
         buttonMessage: 'Load More',
         modalVisible: false,
+        phone_exists: false,
+        email_exists: false,
     };
     take = 10;
     skip = 0;
@@ -72,6 +74,7 @@ class ContactList extends React.Component {
     }
 
     addContact = (newContact) =>{
+        this.setState({phone_exists: false, email_exists: false});
         addContact(newContact)
         .then(response => {
             Alert.alert(
@@ -84,6 +87,14 @@ class ContactList extends React.Component {
               )
         })
         .catch(error => {
+            if(error.response.data && error.response.data.code){
+                if(error.response.data.code == 'EXIST' &&  error.response.data.reason == 'PHONE'){
+                    this.setState({phone_exists: true});
+                }
+                else if(error.response.data.code == 'EXIST' &&  error.response.data.reason == 'EMAIL'){
+                    this.setState({email_exists: true});
+                }
+            }
             alert('Failed to save')
         })
     }
@@ -146,7 +157,10 @@ class ContactList extends React.Component {
                     visible={this.state.modalVisible}>
                     <EditContactsModal title={'Add New Contact'} contact={this.state.contact}
                         onUpdatePress={this.addContact}
-                        onCancelPress={() => { this.setState({ modalVisible: false }); }} />
+                        onCancelPress={() => { this.setState({ modalVisible: false }); }} 
+                        email_exists={this.state.email_exists}
+                        phone_exists={this.state.phone_exists}
+                        />
                 </Modal>
 
 

@@ -28,6 +28,9 @@ export default styles = StyleSheet.create({
     title: {
         fontSize: 20,
     },
+    errorMessage: {
+        color:'red',
+    },
     inputBox: {
         width: '100%',
         height: 70,
