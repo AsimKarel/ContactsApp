@@ -95,7 +95,8 @@ class ContactList extends React.Component {
                     this.setState({email_exists: true});
                 }
             }
-            alert('Failed to save')
+            else
+                alert('Failed to save')
         })
     }
 
@@ -158,8 +159,8 @@ class ContactList extends React.Component {
                     <EditContactsModal title={'Add New Contact'} contact={this.state.contact}
                         onUpdatePress={this.addContact}
                         onCancelPress={() => { this.setState({ modalVisible: false }); }} 
-                        email_exists={this.state.email_exists}
-                        phone_exists={this.state.phone_exists}
+                        emailExists={this.state.email_exists}
+                        phoneExists={this.state.phone_exists}
                         />
                 </Modal>
 

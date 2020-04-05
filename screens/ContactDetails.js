@@ -10,6 +10,22 @@ class ContactDetails extends React.Component {
         super();
     }
 
+
+    state = {
+        modalVisible: false,
+        contact: {
+            id: 0,
+            name: " ",
+            phone: "",
+            email: "",
+            country_code: "",
+            created_on: "",
+            updated_on: ""
+        },
+        phone_exists: false,
+        email_exists: false,
+    }
+
     componentDidMount() {
         this.props.navigation.setOptions({
             headerRight: () => {
@@ -37,18 +53,6 @@ class ContactDetails extends React.Component {
 
     }
 
-    state = {
-        modalVisible: false,
-        contact: {
-            id: 0,
-            name: " ",
-            phone: "",
-            email: "",
-            country_code: "",
-            created_on: "",
-            updated_on: ""
-        }
-    }
 
     deleteContact = () =>{
         // this.props.navigation.navigate('Contacts')
@@ -62,12 +66,22 @@ class ContactDetails extends React.Component {
     }
 
     updateContact = (updated) => {
+        this.setState({phone_exists: false, email_exists: false});
         updateContact(updated)
             .then(res => {
                 this.setState({ contact: updated, modalVisible: false })
             })
-            .catch(err => {
-
+            .catch(error => {
+                if(error.response.data && error.response.data.code){
+                    if(error.response.data.code == 'EXIST' &&  error.response.data.reason == 'PHONE'){
+                        this.setState({phone_exists: true});
+                    }
+                    else if(error.response.data.code == 'EXIST' &&  error.response.data.reason == 'EMAIL'){
+                        this.setState({email_exists: true});
+                    }
+                }
+                else
+                    alert('Failed to save')
             })
     }
 
@@ -82,7 +96,10 @@ class ContactDetails extends React.Component {
                     >
                     <EditContactsModal title={'Update Contact'} contact={this.state.contact}
                         onUpdatePress={this.updateContact}
-                        onCancelPress={() => { this.setState({ modalVisible: false }); }} />
+                        onCancelPress={() => { this.setState({ modalVisible: false }); }} 
+                        emailExists={this.state.email_exists}
+                        phoneExists={this.state.phone_exists}
+                        />
                 </Modal>
 
                 <View style={styles.topSection}>

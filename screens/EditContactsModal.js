@@ -66,7 +66,7 @@ class EditContactsModal extends React.Component {
                         value={this.state.email}
                         onChangeText={(text) => { this.valueChanged('email', text) }}
                     />
-                    {this.props.email_exists && <Text style={styles.errorMessage}>Email already exists</Text>}
+                    {this.props.emailExists && <Text style={styles.errorMessage}>Email already exists</Text>}
                     <View style={{ flexDirection: "row" }}>
                         <TextInput
                             clearButtonMode="always"
@@ -92,7 +92,7 @@ class EditContactsModal extends React.Component {
                             }}
                         />
                     </View>
-                    {this.props.phone_exists && <Text style={styles.errorMessage}>Phone number already exists</Text>}
+                    {this.props.phoneExists && <Text style={styles.errorMessage}>Phone number already exists</Text>}
 
                     <TouchableOpacity style={styles.updateButton} onPress={this.onUpdatePress}>
                         <Text style={{ fontSize: 20, alignSelf: 'center', color: 'blue' }}>{this.props.title.split(' ')[0]}</Text>
