@@ -14,16 +14,26 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 import ContactList from './screens/ContactList';
 import ContactDetails from './screens/ContactDetails';
 
+const Stack = createStackNavigator();
 
 const App: () => React$Node = () => {
   return (
-    <View style={styles.parent}>
-      {/* <ContactDetails/> */}
-      <ContactList/>
-    </View>
+
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Contacts"
+          component={ContactList}
+          options={{title: 'Contacts'}}
+        />
+        <Stack.Screen name="Details" component={ContactDetails} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 

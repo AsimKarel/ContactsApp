@@ -1,21 +1,23 @@
-import { FlatList, View, TextInput, TouchableOpacity, Text } from 'react-native';
+import { FlatList, View, TextInput, TouchableOpacity, Text, SafeAreaView, Modal, Alert } from 'react-native';
 import React, { Component } from 'react';
 import SegmentControl from 'react-native-segment-controller';
 import ContactItem from '../components/ContactItem';
-import LoadButton from '../components/LoadButton';
-import { getContacts } from '../apis/Api';
+import { getContacts, addContact } from '../apis/Api';
 import  styles  from './styling/ContactList';
+import EditContactsModal from './EditContactsModal';
 
 
 
 class ContactList extends React.Component {
 
+    
     state = {
         data: [],
         searchQuery: '',
         sortBy: 'name',
         sortOrder: 'ASC',
-        buttonMessage: 'Load More'
+        buttonMessage: 'Load More',
+        modalVisible: false,
     };
     take = 10;
     skip = 0;
@@ -25,11 +27,24 @@ class ContactList extends React.Component {
     loadMore = true;
 
     componentDidMount() {
-        this.loadData()
+        this.loadData();
+        this.props.navigation.setOptions({
+            headerRight: () => {
+                return (
+                    <TouchableOpacity
+                        onPress={() => {
+                            this.setState({ modalVisible: true })
+                        }}
+                        style={styles.addBtn}>
+                        <Text style={styles.addBtnText}>+</Text>
+                    </TouchableOpacity>
+                );
+            }
+        });
     }
 
-
     loadData = () => {
+        // return;
         this.setState({buttonMessage:'Loading'})
         getContacts({
             take: this.take,
@@ -53,6 +68,23 @@ class ContactList extends React.Component {
             console.log(this.state)
         }).catch(err => {
             alert(JSON.stringify(err))
+        })
+    }
+
+    addContact = (newContact) =>{
+        addContact(newContact)
+        .then(response => {
+            Alert.alert(
+                'Success',
+                'Contact Saved',
+                [
+                  {text: 'Ok', onPress: () => this.setState({modalVisible:false})},
+                ],
+                { cancelable: false }
+              )
+        })
+        .catch(error => {
+            alert('Failed to save')
         })
     }
 
@@ -107,7 +139,18 @@ class ContactList extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <SafeAreaView style={styles.container}>
+                <Modal
+                    animationType="slide"
+                    transparent={this.state.modalVisible}
+                    visible={this.state.modalVisible}>
+                    <EditContactsModal title={'Add New Contact'} contact={this.state.contact}
+                        onUpdatePress={this.addContact}
+                        onCancelPress={() => { this.setState({ modalVisible: false }); }} />
+                </Modal>
+
+
+
                 <TextInput
                     placeholder={'Type here to search'}
                     style={styles.inputBox}
@@ -115,7 +158,7 @@ class ContactList extends React.Component {
                     onChangeText={this.search}
                     clearButtonMode={'while-editing'}
                 />
-                <View style={{flexDirection:'row', width:'80%', marginTop:10,}}>
+                <View style={{flexDirection:'row', width:'80%', marginTop:10, height:40,}}>
                     <View style={{flex:1, marginRight: 5}}>
                         <SegmentControl
                             values={['By Name', 'By Date']}
@@ -150,7 +193,7 @@ class ContactList extends React.Component {
                     data={this.state.data}
                     showsVerticalScrollIndicator={false}
                     renderItem={({ item, index }) => (
-                        <ContactItem contact={item} />
+                        <ContactItem contact={item} onPress={()=>{this.props.navigation.navigate('Details',{contact:item})}} />
                     )}
                     ItemSeparatorComponent={() => <View style={styles.separator} />}
                     ListFooterComponent={
@@ -161,15 +204,12 @@ class ContactList extends React.Component {
                                 }}
                                 style={styles.loadMoreBtn}>
                                 <Text style={styles.btnText}>{this.state.buttonMessage}</Text>
-                                {/* {this.state.fetching_from_server ? (
-                            <ActivityIndicator color="white" style={{ marginLeft: 8 }} />
-                            ) : null} */}
                             </TouchableOpacity>
                         </View>
                     }
                 />
                 
-            </View>
+            </SafeAreaView>
         );
     }
 }

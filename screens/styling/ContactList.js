@@ -5,21 +5,20 @@ export default styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        paddingTop: 30,
-        marginVertical: 50,
+        backgroundColor: 'white'
     },
     separator: {
         height: 0.5,
         backgroundColor: 'rgba(0,0,0,0.4)',
     },
     inputBox: {
-        backgroundColor: '#F0F0F6',
-        width: '90%',
+        backgroundColor: '#edece8',
+        width: '95%',
         padding: 15,
+        margin:5,
         fontSize: 16,
         textAlign: 'center',
         borderRadius: 10,
-        borderWidth: 0.2
     },
     footer: {
         width: '100%',
@@ -42,5 +41,19 @@ export default styles = StyleSheet.create({
         color: 'blue',
         fontSize: 15,
         textAlign: 'center',
+    },
+    addBtnText: {
+        color: 'blue',
+        fontSize: 25,
+        textAlign: 'center',
+    },
+    addBtn: {
+        marginRight:20,
+        width:30,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 0.3,
+        borderColor: 'blue',
+        borderRadius: 7
     },
 });

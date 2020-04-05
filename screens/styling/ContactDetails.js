@@ -4,8 +4,6 @@ export default styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        paddingTop: 30,
-        marginVertical: 50,
     },
     topSection: {
         width: '100%',
@@ -60,7 +58,7 @@ export default styles = StyleSheet.create({
         fontSize: 35,
         alignSelf: 'center',
         textAlign: "center",
-        marginTop: 30,
+        marginTop: 50,
     },
     initialLetter:{
         color: "#121212",
